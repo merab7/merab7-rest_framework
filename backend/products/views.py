@@ -8,11 +8,11 @@ from django.shortcuts import get_object_or_404
 from .permissions import IsStaffEditorPermission
 
 
+
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [IsStaffEditorPermission]
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
 
 
     def perform_create(self, serializer):
@@ -22,16 +22,19 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 class ProductDetailAPIview(generics.RetrieveAPIView):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
     # LOOKUP_FIELD = 'PK'
 
 class ProductDeleteAPIview(generics.DestroyAPIView):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
     # LOOKUP_FIELD = 'PK'
 
 class ProductUpdateAPIview(generics.UpdateAPIView):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
     # LOOKUP_FIELD = 'PK'
 
 

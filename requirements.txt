@@ -2,3 +2,4 @@ django>4.0.0,<4.1.0
 djangorestframework
 pyyaml
 django-cors-headers
+algoliasearch-django>=2.0,<3.0

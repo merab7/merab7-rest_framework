@@ -1,40 +1,53 @@
-from rest_framework import generics, mixins, permissions, authentication
-from yaml import serialize
+from rest_framework import generics
 from .models import Products
 from .serializers import ProductsSerializer
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from .permissions import IsStaffEditorPermission
+from api.mixins import StaffEDitorPermissionMixin, UserQuerySetMixin
 
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView):
+class ProductListCreateAPIView(
+    UserQuerySetMixin,
+    StaffEDitorPermissionMixin,
+    generics.ListCreateAPIView, 
+    ):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
-    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
+
 
 
     def perform_create(self, serializer):
         return super().perform_create(serializer)
 
 
-class ProductDetailAPIview(generics.RetrieveAPIView):
+class ProductDetailAPIview(
+    UserQuerySetMixin,
+    StaffEDitorPermissionMixin,
+    generics.RetrieveAPIView, 
+    ):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
-    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
+    
     # LOOKUP_FIELD = 'PK'
 
-class ProductDeleteAPIview(generics.DestroyAPIView):
+class ProductDeleteAPIview(
+    UserQuerySetMixin,
+    StaffEDitorPermissionMixin,
+    generics.DestroyAPIView, 
+   
+    ):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
-    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
+    
     # LOOKUP_FIELD = 'PK'
 
-class ProductUpdateAPIview(generics.UpdateAPIView):
+class ProductUpdateAPIview(
+    UserQuerySetMixin,
+    StaffEDitorPermissionMixin,
+    generics.UpdateAPIView, 
+    ):
     queryset =  Products.objects.all()
     serializer_class  = ProductsSerializer
-    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
+
     # LOOKUP_FIELD = 'PK'
 
 
